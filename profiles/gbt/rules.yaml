@@ -1,0 +1,72 @@
+required_cover_fields:
+  - standard_number
+  - title_zh
+
+required_sections:
+  - scope
+  - normative_references
+  - terms_definitions
+
+allowed_normative_intro:
+  - 下列文件中的内容通过文中的规范性引用而构成本文件必不可少的条款。其中，注日期的引用文件，仅该日期对应的版本适用于本文件；不注日期的引用文件，其最新版本（包括所有的修改单）适用于本文件。
+  - 本文件没有规范性引用文件。
+
+allowed_terms_intro:
+  - 下列术语和定义适用于本文件。
+  - ……界定的术语和定义适用于本文件。
+  - ……界定的以及下列术语和定义适用于本文件。
+  - 本文件没有需要界定的术语和定义。
+
+reserved_headings:
+  scope: 范围
+  normative_references: 规范性引用文件
+  terms_definitions: 术语和定义
+
+forbidden_patterns:
+  - 摘要
+  - 致谢
+  - 参考文献综述
+
+forbidden_modal_words:
+  - 必须
+  - 需要
+
+forbidden_modal_locations:
+  - sections.scope
+  - clauses
+  - annexes
+
+term_definition_forbidden_words:
+  - 应
+  - 不应
+  - 宜
+  - 不宜
+  - 可
+  - 不可
+  - 能
+  - 不能
+  - 不得
+  - 必须
+  - 需要
+
+forbidden_legal_terms:
+  - 法律责任
+  - 行政处罚
+  - 罚则
+  - 赔偿责任
+  - 违法
+  - 执法
+  - 行政许可
+
+forbidden_contract_terms:
+  - 索赔
+  - 违约
+  - 担保
+  - 结算
+  - 费用承担
+  - 合同约定
+
+forbidden_list_prefixes:
+  - •
+  - ●
+  - ·

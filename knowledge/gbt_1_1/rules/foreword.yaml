@@ -1,0 +1,16 @@
+topic: foreword
+source_clauses:
+  - GB/T 1.1-2020 8.3
+summary: 前言用于说明文件自身之外的信息，不应包含要求性表述、图、表或数学公式，也不应分条。
+check_points:
+  - 前言不应给出章编号。
+  - 前言不应分条。
+  - 前言不应包含要求、指示、推荐或允许型条款。
+  - 前言中常见固定内容包括起草依据、与其他文件关系、提出和归口、起草单位和主要起草人。
+fix_policy:
+  decision_type: ask_user
+  auto_fix_candidates:
+    - 补齐固定尾部信息模板
+  ask_user_cases:
+    - 将要求性表述移入正文还是改写为背景说明
+report_reason_template: 前言的内容或表述方式不符合 GB/T 1.1-2020 第 8.3 条关于前言用途和禁用内容的要求。

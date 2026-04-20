@@ -1,0 +1,88 @@
+meta:
+  identifier: sample-industry
+  language: zh-CN
+
+cover:
+  ics: 25.040.01
+  ccs: J 00
+  record_number: 备案号：12345-2026
+  standard_system_name: 机械
+  standard_number: JB/T 12345—2026
+  replaced_standard: JB/T 99999—2020
+  title_zh: 行业标准文稿生成系统要求
+  title_en: Requirements for industry standard document generation systems
+  alignment_degree: （ISO 一致性关系待定）
+  completion_date: 2026-05
+  published_date: 2026-08-01
+  implementation_date: 2027-02-01
+  issuing_body: 中华人民共和国工业和信息化部
+
+foreword:
+  - 本文件按照 GB/T 1.1—2020 给出的规则起草。
+  - 本文件由机械行业标准化技术组织提出。
+
+introduction:
+  - 为统一行业标准模板自动填充方法，制定本文件。
+
+table_of_contents:
+  enabled: true
+  title: 目次
+  levels: 3
+
+sections:
+  scope:
+    - 本文件规定了行业标准文稿自动生成系统的模板约束、封面填充和结构校验要求。
+    - type: paragraph
+      text: 备案号显示示例见{{refnum:annex_industry_fields}}，页码见第{{page:annex_industry_fields}}页。
+    - type: figure
+      bookmark: fig_industry_cover
+      title: 行业模板封面字段关系
+      title_en: Industry cover field mapping
+      paragraphs:
+        - 图中给出了 c1、c2 和 fm 等表单域与输入字段的对应关系。
+      notes:
+        - 行业模板封面字段会因主管部门不同而调整。
+  normative_references:
+    intro: 本文件没有规范性引用文件。
+    items: []
+  terms_definitions:
+    intro: 下列术语和定义适用于本文件。
+    items:
+      - term: 行业标准模板 profile
+        bookmark: term_industry_profile
+        definition:
+          - 用于描述行业标准模板相对于国家标准模板差异的配置集合，可参见{{refnum:fig_industry_cover}}。
+        level: 1
+
+clauses:
+  - title: 行业模板适配要求
+    paragraphs:
+      - type: paragraph
+        text: 行业模板适配模块应确保备案号、行业名称和发布机关字段可正确落位。
+    children:
+      - title: 封面字段回填
+        bookmark: clause_industry_cover_fill
+        paragraphs:
+          - c1、c2 和 fm 等字段应按模板约束回填。
+          - type: paragraph
+            text: 表单域示例见{{refnum:annex_industry_fields}}。
+
+annexes:
+  - id: A
+    kind: informative
+    title: 行业模板字段示例
+    paragraphs:
+      - 本附录给出了行业模板中备案号、行业名称和发布机构字段的示例。
+      - type: note
+        items:
+          - 备案号区域宜通过字段格式覆盖控制字号。
+    clauses:
+      - title: 表单域映射
+        bookmark: annex_industry_fields
+        paragraphs:
+          - c1 对应备案号，c2 对应行业名称，fm 对应发布机关，相关术语见{{ref:term_industry_profile}}。
+          - type: example
+            items:
+              - title: 备案号显示
+                paragraphs:
+                  - 当 record_number 为“备案号：12345-2026”时，首页右上区域应显示该文本且不应放大失真。

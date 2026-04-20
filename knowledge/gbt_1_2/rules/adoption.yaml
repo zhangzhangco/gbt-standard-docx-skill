@@ -1,0 +1,11 @@
+version: 0.1
+rules:
+  - id: adoption-mode-must-match-content
+    title: 采标方式必须与实际文本处理结果一致
+    summary: 不能只根据起草意图声明 IDT 或 MOD，应结合结构和正文变化判断。
+  - id: mod-foreword-must-explain-differences
+    title: 修改采用前言应说明结构调整和技术差异
+    summary: 当前言声明为 MOD 时，应同步说明结构调整、技术差异及其原因。
+  - id: technical-content-should-not-be-thinned-silently
+    title: 正文技术内容不应被无说明删薄
+    summary: 删除或删薄正文技术内容时，应判断是否构成技术差异，并在附录或前言中说明。

@@ -1,0 +1,19 @@
+decision_types:
+  auto_fix:
+    meaning: 可在不改变技术实质的前提下自动修复。
+    examples:
+      - 缩略语排序
+      - 轻量格式规范化
+      - 固定引导语替换
+  ask_user:
+    meaning: 存在多种合规写法，需要用户先选择处理原则。
+    examples:
+      - 列项形式选择
+      - 规范性引用文件与参考文献的归类
+      - 引言中的要求性表述如何处理
+  report_only:
+    meaning: 问题成立，但通常需要作者或审查专家重构内容，不宜自动改。
+    examples:
+      - 悬置段
+      - 冗余标题
+      - 章节逻辑缺口

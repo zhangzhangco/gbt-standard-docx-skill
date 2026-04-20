@@ -1,0 +1,34 @@
+profile_id: national
+match:
+  core_title: 国家标准
+render_caption_english: false
+render_annex_marker_english: false
+ending_line_image: templates/gbt/assets/ending-line.jpeg
+
+heading_style_overrides:
+  toc_heading: 标准文件_目录标题
+  foreword_heading: 标准文件_目录标题
+  introduction_heading: 标准文件_目录标题
+  bibliography_heading: 标准文件_目录标题
+
+field_map:
+  ICS: cover.ics
+  CSDN: cover.ccs
+  文字1: computed.standard_prefix
+  NSTD_CODE_F: computed.standard_number_front
+  NSTD_CODE_B: computed.standard_number_back
+  OSTD_CODE: computed.replaced_line
+  CSTD_NAME: cover.title_zh
+  ESTD_NAME: cover.title_en
+  IN_STD_CODE: cover.alignment_degree
+  CMPLSH_DATE: cover.completion_date
+  PLSH_DATE_Y: computed.published_year
+  PLSH_DATE_M: computed.published_month
+  PLSH_DATE_D: computed.published_day
+  CROT_DATE_Y: computed.implementation_year
+  CROT_DATE_M: computed.implementation_month
+  CROT_DATE_D: computed.implementation_day
+
+exact_text_map:
+  中华人民共和国国家标准: computed.banner_line
+  GB/T XXXXX—XXXX: cover.standard_number

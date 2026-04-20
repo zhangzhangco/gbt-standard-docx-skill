@@ -1,0 +1,11 @@
+standard: GB/T 1.2-2020
+scope: 以 ISO/IEC 标准化文件为基础的标准化文件起草规则
+status: draft
+topics:
+  - adoption_mode
+  - foreword_requirements
+  - structure_adjustment
+  - technical_differences
+  - editorial_changes
+files:
+  - rules/adoption.yaml

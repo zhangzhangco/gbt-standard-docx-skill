@@ -1,0 +1,66 @@
+cover:
+  standard_number:
+    placeholders:
+      - GB/T XXXXX—XXXX
+    headers:
+      - GB/T XXXXX—XXXX
+  title_zh:
+    sdt_tag: NEW_STAND_NAME
+    placeholders:
+      - 点击此处添加标准名称
+  title_en:
+    placeholders:
+      - 点击此处添加标准名称的英文译名
+  ics:
+    placeholders:
+      - 点击此处添加ICS号
+  ccs:
+    placeholders:
+      - 点击此处添加CCS号
+  alignment_degree:
+    placeholders:
+      - (点击此处添加与国际标准一致性程度的标识)
+  published_date:
+    placeholders:
+      - XXXX - XX - XX发布
+  implementation_date:
+    placeholders:
+      - XXXX - XX - XX实施
+
+sections:
+  scope:
+    heading: 范围
+    body_style: affffb
+  normative_references:
+    heading: 规范性引用文件
+    body_style: affffb
+  terms_definitions:
+    heading: 术语和定义
+    body_style: affffb
+
+blocks:
+  toc_heading: affffff1
+  toc_body: affffffff3
+  foreword_heading: a6
+  introduction_heading: affffffb
+  paragraph: affffb
+  annex_marker: aff3
+  annex_marker_en: af0
+  annex_title: affffff
+  annex_clause_level_1: aff4
+  term_level_1: afffffffffff5
+  term_level_2: afffffffffff6
+  term_level_3: afffffffffff7
+  term_level_4: afffffffffff8
+  term_level_5: afffffffffff9
+  figure_title: afd
+  figure_title_en: affffff3
+  table_title: aff2
+  table_title_en: affffff4
+  annex_figure_title: affffff6
+  annex_table_title: affffff5
+  note_single: afff2
+  note_multi: a5
+  example_single: ac
+  example_multi: afa
+  example_body: afffffffffa

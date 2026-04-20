@@ -1,0 +1,14 @@
+topic: introduction
+source_clauses:
+  - GB/T 1.1-2020 8.4
+summary: 引言用于说明与文件自身内容相关的背景信息，不应包含要求型条款；需要分条时应编为 0.1、0.2 等。
+check_points:
+  - 引言不应给出章编号。
+  - 引言不应包含要求型条款。
+  - 引言分条时只使用 0.x 层级。
+  - 引言适合承载编制原因、编制目的、专利背景等信息。
+fix_policy:
+  decision_type: ask_user
+  ask_user_cases:
+    - 要求性表述是弱化为说明，还是移入正文
+report_reason_template: 引言中出现了不适合放在背景说明中的要求性内容，与 GB/T 1.1-2020 第 8.4 条不符。

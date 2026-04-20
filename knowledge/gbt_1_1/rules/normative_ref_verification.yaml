@@ -1,0 +1,18 @@
+topic: normative_reference_verification
+source_clauses:
+  - GB/T 1.1-2020 8.6.2
+  - GB/T 1.1-2020 9.5.4
+summary: 规范性引用文件除格式正确外，还应区分注日期与不注日期引用，并判断是否需要做版本状态核验。
+check_points:
+  - 注日期引用应理解为锁定到该版本，不应因为存在新版而自动替换。
+  - 不注日期引用应理解为适用最新版本，需要核验当前状态。
+  - 动态注册表、在线分配表等资源应视为需要在线核验的对象。
+  - 如果将注日期引用升级为新版，通常应先评估是否构成技术差异。
+fix_policy:
+  decision_type: ask_user
+  auto_fix_candidates:
+    - 标记需要联网核验的条目
+  ask_user_cases:
+    - 是否将注日期引用升级为新版
+    - 升级版本是否作为技术差异处理
+report_reason_template: 规范性引用文件需要补做版本状态核验，以确认是否存在新版、废止、历史化或动态注册表更新情况。

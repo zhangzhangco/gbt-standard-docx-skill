@@ -1,0 +1,23 @@
+source_assets:
+  raw_docx: knowledge/gbt_1_1/raw/GBT 1.1.docx
+  extracted_full: knowledge/gbt_1_1/extracted/gbt-1.1-full.md
+  extracted_focus: knowledge/gbt_1_1/extracted/gbt-1.1-focus.md
+
+topic_rules:
+  - knowledge/gbt_1_1/rules/lists.yaml
+  - knowledge/gbt_1_1/rules/foreword.yaml
+  - knowledge/gbt_1_1/rules/introduction.yaml
+  - knowledge/gbt_1_1/rules/scope.yaml
+  - knowledge/gbt_1_1/rules/normative_refs.yaml
+  - knowledge/gbt_1_1/rules/abbreviations.yaml
+  - knowledge/gbt_1_1/rules/citations.yaml
+  - knowledge/gbt_1_1/rules/decision_map.yaml
+
+runtime_bridge:
+  lightweight_runtime_rules: profiles/gbt/rules.yaml
+  generated_review_script: scripts/review_gbt_docx.py
+  generated_report_script: scripts/report_review_docx.py
+
+notes:
+  - 这一层以主题规则为主，不直接绑定某一份模板。
+  - 后续新增规则时，优先补入 rules/，再决定是否下沉到运行时脚本。

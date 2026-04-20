@@ -1,0 +1,397 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GB/T Document Input",
+  "type": "object",
+  "definitions": {
+    "contentBlock": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "paragraph",
+                "styled_paragraph",
+                "figure",
+                "table",
+                "note",
+                "example"
+              ]
+            },
+            "text": {
+              "type": "string"
+            },
+            "style_name": {
+              "type": "string"
+            },
+            "style_key": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "bookmark": {
+              "type": "string"
+            },
+            "title_en": {
+              "type": "string"
+            },
+            "paragraphs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "rows": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "header_rows": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "notes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string"
+                      },
+                      "paragraphs": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "clauseNode": {
+      "type": "object",
+      "required": [
+        "title"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "bookmark": {
+          "type": "string"
+        },
+        "paragraphs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/contentBlock"
+          }
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/clauseNode"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "cover",
+    "sections"
+  ],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "properties": {
+        "identifier": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string",
+          "default": "zh-CN"
+        }
+      }
+    },
+    "cover": {
+      "type": "object",
+      "required": [
+        "standard_number",
+        "title_zh"
+      ],
+      "properties": {
+        "ics": {
+          "type": "string"
+        },
+        "ccs": {
+          "type": "string"
+        },
+        "standard_number": {
+          "type": "string"
+        },
+        "standard_system_name": {
+          "type": "string"
+        },
+        "title_zh": {
+          "type": "string"
+        },
+        "title_en": {
+          "type": "string"
+        },
+        "alignment_degree": {
+          "type": "string"
+        },
+        "replaced_standard": {
+          "type": "string"
+        },
+        "completion_date": {
+          "type": "string"
+        },
+        "published_date": {
+          "type": "string"
+        },
+        "implementation_date": {
+          "type": "string"
+        },
+        "issuing_body": {
+          "type": "string"
+        },
+        "record_number": {
+          "type": "string"
+        }
+      }
+    },
+    "adoption": {
+      "type": "object",
+      "required": [
+        "mode",
+        "source_standard"
+      ],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "IDT",
+            "MOD",
+            "NEQ"
+          ]
+        },
+        "source_standard": {
+          "type": "string"
+        },
+        "source_language": {
+          "type": "string"
+        },
+        "structure_adjustments": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "technical_differences": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "editorial_changes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "foreword": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "introduction": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "table_of_contents": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "title": {
+          "type": "string"
+        },
+        "levels": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9
+        }
+      }
+    },
+    "clauses": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/clauseNode"
+      }
+    },
+    "sections": {
+      "type": "object",
+      "required": [
+        "scope",
+        "normative_references",
+        "terms_definitions"
+      ],
+      "properties": {
+        "scope": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/contentBlock"
+          }
+        },
+        "normative_references": {
+          "type": "object",
+          "properties": {
+            "intro": {
+              "type": "string"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "terms_definitions": {
+          "type": "object",
+          "properties": {
+            "intro": {
+              "type": "string"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "term",
+                      "definition"
+                    ],
+                    "properties": {
+                      "term": {
+                        "type": "string"
+                      },
+                      "definition": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "level": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 5
+                      },
+                      "bookmark": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "annexes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "title"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "structure_adjustment",
+              "technical_differences",
+              "correspondence",
+              "other"
+            ]
+          },
+          "bookmark": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "normative",
+              "informative"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "paragraphs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/contentBlock"
+            }
+          },
+          "clauses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/clauseNode"
+            }
+          }
+        }
+      }
+    },
+    "bibliography": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -1,0 +1,96 @@
+meta:
+  identifier: sample-gbt
+  language: zh-CN
+
+cover:
+  ics: 01.040.03
+  ccs: A 00
+  standard_number: GB/T 12345—2026
+  title_zh: 标准文稿生成系统要求
+  title_en: Requirements for standard document generation systems
+  alignment_degree: （ISO 一致性关系待定）
+  published_date: 2026-06-30
+  implementation_date: 2027-01-01
+
+foreword:
+  - 本文件按照 GB/T 1.1—2020 给出的规则起草。
+  - 本文件由标准文稿自动生成工作组提出。
+
+introduction:
+  - 为提升标准草案起草效率，减少模板误用和编号错误，制定本文件。
+
+table_of_contents:
+  enabled: true
+  title: 目次
+  levels: 3
+
+sections:
+  scope:
+    - 本文件规定了标准文稿生成系统的输入、输出、模板管理和校验要求。
+    - 本文件适用于基于文档模板自动生成标准草案的系统设计、开发和验证。
+    - type: paragraph
+      text: 实现示例见{{refnum:annex_profile_mapping}}，对应页码见第{{page:annex_profile_mapping}}页。
+    - type: figure
+      bookmark: fig_system_components
+      title: 系统组成示意
+      title_en: System components
+      paragraphs:
+        - 图中给出了模板解析、规则校验和文稿渲染之间的关系。
+      notes:
+        - 图中箭头表示数据流向，不表示部署边界。
+    - type: note
+      items:
+        - 本文件中的图示仅用于说明结构关系。
+    - type: example
+      items:
+        - title: 最小输入
+          paragraphs:
+            - 仅提供封面、范围、规范性引用文件和术语条，即可生成可校验草案。
+  normative_references:
+    intro: 本文件没有规范性引用文件。
+    items: []
+  terms_definitions:
+    intro: 下列术语和定义适用于本文件。
+    items:
+      - term: 模板 profile
+        bookmark: term_profile
+        definition:
+          - 用于描述不同标准模板之间封面字段、表单域和固定占位差异的配置集合，系统组成可参见{{refnum:fig_system_components}}。
+        level: 1
+
+clauses:
+  - title: 生成要求
+    paragraphs:
+      - type: paragraph
+        text: 标准文稿生成系统应保证生成输出符合模板样式和编号约束。
+    children:
+      - title: 模板选择
+        bookmark: clause_template_selection
+        paragraphs:
+          - 系统应基于模板 profile 选择国家标准模板或行业标准模板。
+          - type: paragraph
+            text: 附录说明见{{refnum:annex_profile_mapping}}。
+
+annexes:
+  - id: A
+    kind: informative
+    title: 模板兼容实现示例
+    paragraphs:
+      - 本附录给出了国家标准模板和行业标准模板共用渲染器的实现思路。
+      - type: table
+        title: profile 关键映射项
+        title_en: Key profile mappings
+        paragraphs:
+          - 表中列出了封面字段、表单域名称和替换策略。
+        notes:
+          - 映射关系可根据模板迭代扩展。
+    clauses:
+      - title: profile 映射
+        bookmark: annex_profile_mapping
+        paragraphs:
+          - profile 映射用于声明模板字段名与输入字段之间的对应关系，并可引用{{ref:term_profile}}。
+          - type: example
+            items:
+              - title: 行业模板备案号
+                paragraphs:
+                  - 可通过 c1 字段格式覆盖控制字号和对齐方式。

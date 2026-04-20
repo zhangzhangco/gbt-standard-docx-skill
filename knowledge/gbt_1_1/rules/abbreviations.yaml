@@ -1,0 +1,18 @@
+topic: abbreviations
+source_clauses:
+  - GB/T 1.1-2020 8.8
+  - GB/T 1.1-2020 9.4.3
+summary: 缩略语宜作为第 4 章给出，使用固定引导语，清单项前不编号，并按字母顺序排列；正文首次使用时应给出对应中文词语或解释。
+check_points:
+  - 使用缩略语章节时应给出对应引导语。
+  - 清单项前不应加序号。
+  - 缩略语宜按字母顺序排列。
+  - 正文使用缩略语时，首次出现宜给出对应中文词语或解释。
+  - 缩略语清单中的条目应确实服务于正文理解。
+fix_policy:
+  decision_type: mixed
+  auto_fix_candidates:
+    - 按字母顺序排序
+  ask_user_cases:
+    - 某缩略语只出现一次时是删除条目，还是在正文补用
+report_reason_template: 缩略语的引导语、排序或正文使用关系与 GB/T 1.1-2020 第 8.8 条和第 9.4.3 条不一致。
