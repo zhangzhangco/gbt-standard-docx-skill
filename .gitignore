@@ -12,7 +12,6 @@ examples/iso26430-6-national.json
 knowledge/gbt_1_1/raw/
 knowledge/gbt_1_1/extracted/gbt-1.1-full.md
 knowledge/gbt_1_1/extracted/gbt-1.1-focus.md
-templates/gbt/source/
 
 # Office artifacts generated during local verification
 *.docx

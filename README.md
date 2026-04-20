@@ -1,132 +1,153 @@
-# GB/T 标准文稿 Docx Skill
+# 中文标准文稿 Docx Skill
 
-面向中文标准文稿的 Word skill。
+这是一个给标准起草用户用的 skill。
 
-它的目标不是“凭空拼一个 `.docx`”，而是基于现有标准模板，完成结构化生成、输入校验、生成后审查，以及修改意见表输出，尽量把 `GB/T 1.1—2020` 的体例约束前移到流程里。
+它可以帮你新建、修改和检查一份标准文稿。仓库自带 `GB/T` 模板和行业标准模板。
 
-当前仓库重点覆盖：
+如果你是普通起草用户，可以先把它理解成一件事：
 
-- `GB/T 1.1—2020` 标准文稿生成、校验、审查
-- 国家标准模板和行业标准模板两类 profile
-- `GB/T 1.2` 采标场景的第一版基础检查
+- 你提供标准草案材料
+- skill 按模板整理成标准文稿
+- 你继续修改
+- skill 再帮你检查格式和常见问题
 
-## 这个 skill 适合做什么
+## 你可以怎么用
 
-- 根据结构化 YAML 输入生成标准草案 `.docx`
-- 在渲染前检查封面字段、章节结构、书签、交叉引用、附录连续性
-- 对生成后的 `.docx` 做规则审查，并导出 JSON 结果
-- 把审查结果整理成“修改意见表” Word 文档
-- 对规范性引用文件做版本核验提示，区分哪些条目必须单独查新
+最常见的就是三件事：
 
-## 核心思路
+### 1. 新建一份标准文稿
 
-和很多“从零造 Word”的方案不同，这个仓库默认把模板当成真源：
+你可以先给它一份草稿材料，比如：
 
-- 模板决定版式、样式、页眉页脚、目录域和已有占位结构
-- 输入文件决定封面信息、正文结构、图表内容、附录和引用关系
-- 规则文件负责约束“哪些内容应该怎么写”，而不是把规则硬编码在每个脚本里
+- 一段需求说明
+- 一份现有标准草案
+- 一份章节提纲
+- 一份 `.txt`、`.md`、`.yaml` 或已有 `.docx`
 
-```mermaid
-flowchart LR
-    A["结构化输入 YAML"] --> B["validate_gbt.py<br/>先做规则校验"]
-    B --> C["render_gbt.py<br/>在模板上生成 .docx"]
-    C --> D["refresh_fields.py<br/>刷新域/交叉引用"]
-    D --> E["verify_render.py<br/>导出 PDF 和页面图"]
-    C --> F["review_gbt_docx.py<br/>生成后审查"]
-    F --> G["report_review_docx.py<br/>输出修改意见表"]
-```
+skill 会把这些材料整理成标准文稿需要的结构，再生成一份可继续编辑的 Word 文件。
 
-## 文稿元素支持到什么程度
+### 2. 修改一份已有标准文稿
 
-这个 skill 当前已经能比较稳定地处理下列元素：
+如果你已经有标准草案，它可以继续帮你：
 
-| 类别 | 当前支持 |
-| --- | --- |
-| 封面 | ICS、CCS、标准号、中文名、英文名、发布日期、实施日期、备案号、归口/发布信息 |
-| 前置部分 | 前言、引言、目录页 |
-| 正文结构 | 范围、规范性引用文件、术语和定义、缩略语、主条款、子条款 |
-| 文档块 | 普通段落、图、表、注、示例 |
-| 附录 | 资料性/规范性附录、附录下条款树 |
-| 引用关系 | `REF/PAGEREF` 交叉引用、显式书签、自动生成稳定引用名 |
-| 审查输出 | JSON 审查结果、修改意见表 `.docx` |
+- 按你的修改意见更新封面、前言、范围、术语、条款、附录
+- 调整 `GB/T` 或行业标准模板中的固定字段
+- 处理图、表、注、示例、交叉引用这类常见内容
+- 保留原有模板样式，避免越改越乱
 
-你可以把它理解成：它已经能覆盖“标准草案首版生成 + 一轮格式/规则审查”的主链路，但还不是一个把 Word 全部复杂对象都自动化完毕的系统。
+### 3. 检查一份标准文稿
 
-## 一个最小输入长什么样
+起草过程中，最麻烦的往往不是“写”，而是“查”。
 
-仓库里放了公开最小示例：[`examples/gbt-minimal.yaml`](examples/gbt-minimal.yaml)。
+这个 skill 可以帮你检查一份文稿里常见的问题，例如：
 
-它描述的是“写什么”，不是“Word 里每个样式怎么点出来”。例如：
+- 标准号、日期、封面字段是否完整
+- 条款、附录、书签和交叉引用是否有明显错误
+- 某些常见体例问题是否需要修改
+- 规范性引用文件里哪些条目需要单独核验版本
 
-```yaml
-cover:
-  standard_number: GB/T 12345—2026
-  title_zh: 标准文稿生成系统要求
-  title_en: Requirements for standard document generation systems
+检查结果可以直接输出成结构化结果，也可以整理成“修改意见表”。
 
-foreword:
-  - 本文件按照 GB/T 1.1—2020 给出的规则起草。
+## 你需要准备什么
 
-sections:
-  scope:
-    - 本文件规定了标准文稿生成系统的输入、输出、模板管理和校验要求。
+不需要一开始就准备很规范的输入。
 
-clauses:
-  - title: 生成要求
-    children:
-      - title: 模板选择
-        paragraphs:
-          - 系统应基于模板 profile 选择国家标准模板或行业标准模板。
-```
+实际使用时，你可以直接给：
 
-也就是说，调用者主要关心：
+- 一份纯文本草稿
+- 一份章节大纲
+- 一份已经写过的 Word 文档
+- 一份从别处整理出来的内容材料
 
-1. 这份标准有哪些组成部分。
-2. 每个部分的文本是什么。
-3. 图、表、注、示例、附录和引用关系怎么挂上去。
+如果材料比较散，skill 可以先把内容整理成适合生成标准文稿的结构；如果材料已经很规整，也可以直接进入生成和检查环节。
 
-至于最终样式，优先交给模板和 profile。
+也就是说，`YAML` 只是仓库里公开示例采用的一种表达方式，不是普通用户唯一的使用方式。
 
-## 典型工作流
+## 它当前能处理哪些内容
 
-### 1. 生成标准草案
+目前已经能比较稳定地覆盖这些部分：
+
+- 封面信息
+- 前言
+- 引言
+- 目录页
+- 范围
+- 规范性引用文件
+- 术语和定义
+- 缩略语
+- 主条款和子条款
+- 附录
+- 图、表、注、示例
+- 交叉引用
+- 修改意见表输出
+
+模板方面，当前已经支持仓库自带的 `GB/T` 模板和行业标准模板。
+
+## 一个简单使用方式
+
+对普通用户来说，可以直接按下面这个顺序理解：
+
+1. 准备一份草稿材料，文本、提纲或已有文稿都可以。
+2. 让 skill 生成一份标准文稿初稿。
+3. 在 Word 里继续修改和补充内容。
+4. 再让 skill 做一轮检查。
+5. 根据检查结果修改，必要时导出修改意见表。
+
+## 适用场景
+
+- 从零起草一份标准草案
+- 把已有草稿整理成更像标准文稿的版本
+- 在 `GB/T` 和行业标准模板之间切换
+- 对送审前文稿做一轮格式和结构检查
+- 对规范性引用文件做版本核验提示
+- 为采标项目补做基础一致性检查
+
+## 示例文件
+
+仓库里放了几份公开示例：
+
+- [`examples/gbt-minimal.yaml`](examples/gbt-minimal.yaml)
+- [`examples/industry-minimal.yaml`](examples/industry-minimal.yaml)
+- [`examples/dy-led-auditorium.yaml`](examples/dy-led-auditorium.yaml)
+
+这些示例主要是给开发和验证用的。普通用户不需要先学会这些示例格式，照样可以使用这个 skill。
+
+## 如果你要自己跑仓库里的脚本
+
+如果你希望直接在本地运行仓库里的脚本，可以先安装依赖：
 
 ```bash
-python3 scripts/validate_gbt.py \
-  --input examples/gbt-minimal.yaml \
-  --rules profiles/gbt/rules.yaml
+python3 -m pip install -r requirements.txt
+```
 
+然后按下面几类操作使用：
+
+### 生成文稿
+
+```bash
 python3 scripts/render_gbt.py \
   --input examples/gbt-minimal.yaml \
   --template templates/gbt/source/国家标准.dotx \
   --output outputs/generated/示例标准.docx
 ```
 
-### 2. 刷新域并做视觉核验
-
-```bash
-python3 scripts/refresh_fields.py \
-  --input outputs/generated/示例标准.docx \
-  --soffice-roundtrip
-
-python3 scripts/verify_render.py \
-  --input outputs/generated/示例标准.docx \
-  --output-dir outputs/verify/national
-```
-
-### 3. 生成后审查并输出修改意见表
+### 检查文稿
 
 ```bash
 python3 scripts/review_gbt_docx.py \
   --input outputs/generated/示例标准.docx \
   --output outputs/review/示例标准.review.json
+```
 
+### 输出修改意见表
+
+```bash
 python3 scripts/report_review_docx.py \
   --input outputs/review/示例标准.review.json \
   --output outputs/review/示例标准-修改意见表.docx
 ```
 
-### 4. 规范性引用文件版本核验
+### 检查规范性引用文件
 
 ```bash
 python3 scripts/check_normative_refs.py \
@@ -134,71 +155,21 @@ python3 scripts/check_normative_refs.py \
   --output outputs/review/示例标准.normative-refs.json
 ```
 
-这个步骤的职责是“提示你哪里必须核验”，不是擅自把引用标准替换成最新版。
+如果需要做目录、页码和部分域刷新，还需要本机可用的 `LibreOffice`。
 
-## 当前能力边界
+## 当前范围
 
-第一版已经支持：
+目前仓库重点覆盖：
 
-- 基于 `.dotx` 模板定点填充，而不是重建整套 Word 样式
-- 国家标准和行业标准模板适配
-- 模板内容控件、表单域和常见占位文本替换
-- 目录域、书签、`REF/PAGEREF` 交叉引用的基础处理
-- 图题、表题、术语条、主条款、附录条款的稳定引用名生成
-- 生成后直接读取 OOXML 做规则审查
-- `GB/T 1.2` 采标场景的基础一致性检查
+- `GB/T 1.1—2020` 体例下的标准文稿生成、修改、检查
+- `GB/T 1.2` 采标场景的第一版基础检查
+- `GB/T` 和行业标准模板适配
 
-第一版暂不覆盖：
+现在这套能力已经能支撑一轮比较完整的起草流程，但还没有覆盖 Word 里的所有复杂对象和全部细节。
 
-- 复杂图表对象的自动插入
-- 所有复杂交叉引用的完全重算
-- 更深层级附录条款的全面编排
-- 可公开分发的模板真源
+## 使用提醒
 
-## 目录结构
-
-- `SKILL.md`
-  skill 入口说明
-- `scripts/`
-  生成、校验、审查、报告脚本
-- `profiles/gbt/`
-  输入 schema、规则和样式映射
-- `templates/gbt/profiles/`
-  模板 profile
-- `templates/gbt/assets/`
-  可公开静态资源
-- `knowledge/gbt_1_1/`
-  `GB/T 1.1` 规则知识层
-- `knowledge/gbt_1_2/`
-  采标规则骨架
-- `examples/`
-  可公开最小示例
-- `docs/`
-  架构、边界和路线图文档
-
-## 安装
-
-```bash
-python3 -m pip install -r requirements.txt
-```
-
-依赖比较轻，核心是：
-
-- `python-docx`
-- `PyYAML`
-
-如果要做域刷新和版式回写，还需要本机可用的 `LibreOffice`。
-
-## 公开仓库默认不包含什么
-
-为避免把实验数据和可能存在授权边界的内容一起公开，仓库默认不提交：
-
-- `outputs/`、`tmp/` 下的生成物和中间产物
-- 项目级实验数据
-- 原始标准全文和长篇抽取文本
-- `templates/gbt/source/` 下的模板真源
-
-这意味着公开仓库更像“可复用 skill 本体”，而不是某个真实标准项目的完整工作目录。
+仓库已经自带 `GB/T` 模板和行业标准模板。
 
 ## 进一步说明
 
